@@ -17,16 +17,17 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUserBookmarks(string userId)
+        public async Task<IActionResult> GetUserBookmarks(string userId,         [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
         {
             if (string.IsNullOrEmpty(userId))
             {
                 return BadRequest("User ID is required.");
             }
 
-            var bookmarks = await _bookmarkService.GetUserBookmarksAsync(userId);
+            var bookmarks = await _bookmarkService.GetUserBookmarksAsync(userId,page, pageSize, $"/users/{userId}/bookmarks" );
 
-            if (bookmarks == null || !bookmarks.Any())
+            if (bookmarks == null)
             {
                 return NotFound("No bookmarks found for this user.");
             }

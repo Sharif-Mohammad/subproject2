@@ -12,17 +12,25 @@ public class MovieService(IUnitOfWork unitOfWork) : IMovieService
     {
         var movies = await unitOfWork.Movies.GetAllAsync(page, pageSize);
         var enumerable = movies as Movie[] ?? movies.ToArray();
-        var totalItems = enumerable.Length;
+        var totalItems = await unitOfWork.Movies.GetCountAsync();
 
         var movieDtos = enumerable.Select(m => m.ToMovieDto()).ToList();
 
-        return PaginatedResult<MovieDto>.Create(movieDtos, page, pageSize,"movies");
+        return PaginatedResult<MovieDto>.Create(movieDtos, page, pageSize,"movies", totalItems);
     }
 
     public async Task<MovieDto> GetMovieByIdAsync(string movieId)
     {
         var movie = await unitOfWork.Movies.GetByIdAsync(movieId);
         return movie.ToMovieDto();
+    }
+    public async Task<PaginatedResult<MovieDto>> SearchAsync(string title = null, string plot = null, int? releaseYear = null, bool? isAdult = null, int page = 1, int pageSize = 10)
+    {
+        var ( movies, total) = await unitOfWork.Movies.SearchAsync(title,plot,releaseYear,isAdult,page,pageSize);
+
+        var movieDtos = movies.Select(m => m.ToMovieDto()).ToList();
+
+        return PaginatedResult<MovieDto>.Create(movieDtos, page, pageSize,"movies", total);
     }
 
 

@@ -15,7 +15,7 @@ namespace UnitTestService.Services
         private readonly SearchService search;
         private readonly ApplicationDbContext appDbContext;
         // Define your connection string
-        string connectionString = "Host=localhost;Database=movie_dev;Username=postgres;Password=123456";
+        string connectionString = "Host=localhost;Database=movie_dev;Username=Sabbir;Password=123456";
 
         public DataServiceTests()
         {

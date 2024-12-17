@@ -10,6 +10,8 @@ public interface IUnitOfWork : IDisposable
 
     IBookmarkRepository Bookmarks { get; }
     INotesRepository Notes { get; }
+    IMovieRatingsRepository Ratings { get; }
+    IMovieUserRatingsRepository UserRatings { get; }
 
     Task<int> CompleteAsync();  // Commit all changes
 }

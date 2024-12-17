@@ -23,6 +23,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<MovieGenre> MovieGenres { get; set; }
     public DbSet<Profession> Professions { get; set; }
     public DbSet<PersonProfession> PersonProfessions { get; set; }
+    public DbSet<Bookmark> Bookmarks { get; set; }
     
     protected override void OnModelCreating(ModelBuilder builder)
     {

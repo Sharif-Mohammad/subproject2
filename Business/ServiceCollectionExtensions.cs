@@ -15,5 +15,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<INoteService, NoteService>();
         services.AddScoped<ISearchService, SearchService>();
         services.AddScoped<INameRatingsService, NameRatingsService>();
+        services.AddScoped<IMovieRatings, MovieRatings>();
     }
     }

@@ -69,6 +69,8 @@ namespace Business.Services.Frameworks
         {
             var userNotes = await unitOfWork.Notes.GetAllAsync(
                          note => note.UserId == userId,
+                         0,
+                         int.MaxValue,
                          note => note.User
                      );
 

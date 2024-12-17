@@ -12,6 +12,8 @@ namespace Persistence.Repositories
         Task<IEnumerable<T>> ExecuteRawSqlAsync<T>(string sql, object parameters = null) where T : class;
         Task<IEnumerable<TEntity>> GetAllAsync(
     Expression<Func<TEntity, bool>> filter = null,
+      int skip = 0,
+    int take = int.MaxValue,
     params Expression<Func<TEntity, object>>[] includes);
         Task<TEntity> GetByIdAsync(object id);
         void Update(TEntity entity);

@@ -15,7 +15,8 @@ public static class MovieMapper
             RuntimeMinutes = m.RuntimeMinutes,
             IsAdult = m.IsAdult,
             Plot = m.Plot,
-            SelfUrl = $"/api/movies/{m.MovieId}"
+            SelfUrl = $"/api/movies/{m.MovieId}",
+            PosterUrl = m.PosterUrl,
         };
     }
 }

@@ -9,4 +9,5 @@ public class MovieDto
     public bool IsAdult { get; set; }
     public string Plot { get; set; }
     public string SelfUrl { get; set; }
+    public string? PosterUrl { get; set; }
 }

@@ -36,11 +36,43 @@ namespace API.Controllers
 
         // Get all notes for a specific user
         [HttpGet("users/{userId}")]
-        public async Task<IActionResult> GetBookmarksForUser(string userId)
+        public async Task<IActionResult> GetBookmarksForUser(string userId,        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
         {
-            var notes = await _bookmarkService.GetUserBookmarksAsync(userId);
+            var notes = await _bookmarkService.GetUserBookmarksAsync(userId, page, pageSize,$"users/{userId}");
             return Ok(notes);
         }
+
+        // Get all notes for a specific user
+        [HttpGet("users/{userId}/{movieId}")]
+        public async Task<IActionResult> GetBookmarksForUser(string userId, string movieId)
+        {
+            var isBookMarked = await _bookmarkService.IsBookMarked(userId, movieId);
+            return Ok(new
+            {
+                IsBookmarked = isBookMarked,
+            });
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] BookmarkRequest request)
+        {
+            if (string.IsNullOrEmpty(request.UserId) || string.IsNullOrEmpty(request.MovieId))
+            {
+                return BadRequest("User ID and Movie ID are required.");
+            }
+
+            var success = await _bookmarkService.Remove(request.UserId, request.MovieId);
+
+            if (success)
+            {
+                return NoContent(); // 204 No Content indicates successful deletion
+            }
+
+            return NotFound("Bookmark not found."); // 404 Not Found if the bookmark doesn't exist
+        }
+
     }
 
 }

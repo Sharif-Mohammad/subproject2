@@ -152,7 +152,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetSimilarMovies(
     [FromRoute] string movieId,
     [FromQuery] int page = 1,
-    [FromQuery] int pageSize = 10)
+    [FromQuery] int pageSize = 12)
         {
             // Ensure page starts from 1
             page = page > 0 ? page : 1;

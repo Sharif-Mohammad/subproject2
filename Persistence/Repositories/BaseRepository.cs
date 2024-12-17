@@ -31,6 +31,8 @@ namespace Persistence.Repositories
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync(
     Expression<Func<TEntity, bool>> filter = null,
+      int skip = 0,
+    int take = int.MaxValue,
     params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = _dbSet;
@@ -49,7 +51,8 @@ namespace Persistence.Repositories
                     query = query.Include(include);
                 }
             }
-
+            // Apply pagination
+             query = query.Skip(skip).Take(take);
             return await query.ToListAsync();
         }
 

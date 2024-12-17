@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Business.Models.Movies;
 using Business.Models.Movies.Search;
 using Microsoft.AspNetCore.Authorization;
+using Business.Services.Frameworks;
 
 namespace API.Controllers
 {
@@ -15,10 +16,12 @@ namespace API.Controllers
     public class NameRatingsController : ControllerBase
     {
         private readonly INameRatingsService nameRatings;
+        private readonly IMovieRatings movieRatings;
 
-        public NameRatingsController(INameRatingsService nameRatings)
+        public NameRatingsController(INameRatingsService nameRatings, IMovieRatings movieRatings)
         {
             this.nameRatings = nameRatings;
+            this.movieRatings = movieRatings;
         }
         [HttpPut]
         public async Task<IActionResult> UpdateNameRatings()
@@ -77,6 +80,26 @@ namespace API.Controllers
             var searchResults = await nameRatings.GetNameRatingAsync(request);
             var paginatedResult = PaginatedResult<NameRatingDto>.Create(searchResults, page, pageSize, $"name-ratings/{userId}/search/{name}");
             return Ok(paginatedResult);
+        }
+
+
+        [HttpGet("movie/{movieId}")]
+        [Authorize]
+        public async Task<IActionResult> GeMovieRating(
+            [FromRoute] string movieId)
+        {
+            var rating = await movieRatings.Get(movieId);
+            return Ok(rating);
+        }
+
+        [HttpGet("movie/{movieId}/{userId}")]
+        [Authorize]
+        public async Task<IActionResult> GetUserMovieRating(
+           [FromRoute] string movieId,
+           [FromRoute] string userId)
+        {
+            var rating = await movieRatings.GetUserRatings(userId,movieId);
+            return Ok(rating);
         }
     }
 }

@@ -13,6 +13,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMovieRepository, MovieRepository>();
         services.AddScoped<IBookmarkRepository, BookmarkRepository>();
         services.AddScoped<INotesRepository, NotesRepository>();
+        services.AddScoped<IMovieRatingsRepository, MovieRatingsRepository>();
+        services.AddScoped<IMovieUserRatingsRepository, MovieUserRatingsRepository>();
     }
 
 }
